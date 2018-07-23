@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <div class="navbar-header">
+    <a routerLink="/" class="navbar-brand p-0">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-square-o fa-stack-2x"></i>
+        <i class="fa fa-home fa-stack-1x"></i>
+      </span>
+    </a>
+  </div>
+  <div class="navbar-collapse collapse justify-content-stretch">
+    <ul class="navbar-nav">
+      <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="shopping-list">Produkty</a></li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li routerLinkActive="active" class="nav-item">
+        <button type="button" class="btn btn-warning" routerLink="shopping-cart">
+          <span class="fa fa-shopping-cart"></span> Koszyk <span class="badge badge-dark">{{cartItemsNumber}}</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>

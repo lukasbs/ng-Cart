@@ -1,0 +1,14 @@
+<form class="d-flex border border-secondary rounded m-2 bg-light" *ngFor="let product of products; let i = index"
+      (ngSubmit)="addToCart(f,i)" #f="ngForm">
+  <div class="d-flex mr-auto p-2 align-items-center">
+    <label for="amount" class="mb-0 ml-3">{{product}}</label>
+  </div>
+  <div class="p-2">
+    <input id="amount" name="amount" ngModel class="form-control" type="number" min="1"
+           required oninput="validity.valid||(value='')" placeholder="Ilość...">
+  </div>
+  <div class="p-2">
+    <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Dodaj</button>
+  </div>
+</form>
+

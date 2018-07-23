@@ -1,0 +1,18 @@
+<div *ngIf="products.length > 0; else emptyCart">
+  <div class="col-md-6 offset-3">
+    <div class="d-flex border border-secondary rounded m-2 bg-light" *ngFor="let product of products; let i = index">
+      <div class="d-flex mr-auto p-2 align-items-center">
+        {{product.name}} ({{product.amount}})
+      </div>
+      <div class="p-2">
+        <button (click)="delete(i)" type="button" class="btn btn-danger">Usuń</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyCart>
+  <div class="d-flex flex-row justify-content-center my-5 text-light">
+    <h1>Nic tu nie ma!</h1>
+  </div>
+</ng-template>
