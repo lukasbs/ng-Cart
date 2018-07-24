@@ -1,37 +1,26 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Product} from '../shared/ingredient.model';
-import {ShoppingCartService} from './shopping-cart.service';
-import {Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
+import {Store} from '@ngrx/store';
+import * as ShoppingCartActions from './store/shopping-cart.actions';
+import * as fromApp from '../store/app.reducers';
 
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
   styleUrls: ['./shopping-cart.component.scss']
 })
-export class ShoppingCartComponent implements OnInit, OnDestroy {
+export class ShoppingCartComponent implements OnInit {
 
-  products: Product[];
+  shoppingCartState: Observable<{products: Product[]}>;
 
-  private subscription: Subscription;
-
-  constructor(private shoppingCartService: ShoppingCartService) { }
+  constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
-    this.products = this.shoppingCartService.getProducts();
-    this.subscription = this.shoppingCartService.productsChanged
-      .subscribe(
-        (products: Product[]) => {
-          this.products = products;
-        }
-    );
+    this.shoppingCartState = this.store.select('shoppingCart');
   }
 
   delete(index: number): void {
-    this.shoppingCartService.deleteProduct(index);
+    this.store.dispatch(new ShoppingCartActions.DeleteProduct(index));
   }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
 }

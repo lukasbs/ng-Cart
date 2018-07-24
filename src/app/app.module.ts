@@ -8,8 +8,9 @@ import { HeaderComponent } from './header/header.component';
 import {AppRoutingModule} from './app-routing.module';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {ShoppingCartService} from './shopping-cart/shopping-cart.service';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from './store/app.reducers';
 
 
 @NgModule({
@@ -24,11 +25,10 @@ import {AngularFontAwesomeModule} from 'angular-font-awesome';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    StoreModule.forRoot(reducers)
   ],
-  providers: [
-    ShoppingCartService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

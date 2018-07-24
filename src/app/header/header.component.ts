@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ShoppingCartService} from '../shopping-cart/shopping-cart.service';
+import {Store} from '@ngrx/store';
 import {Subscription} from 'rxjs';
+import * as fromApp from '../store/app.reducers';
 
 @Component({
   selector: 'app-header',
@@ -8,19 +9,20 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  private subscription: Subscription;
+  subscription: Subscription;
   cartItemsNumber: number;
 
-  constructor(private shoppingCartService: ShoppingCartService) { }
+  constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
-    this.cartItemsNumber = this.shoppingCartService.countProducts();
-    this.subscription = this.shoppingCartService.productsChanged
-      .subscribe(
-        () => {
-          this.cartItemsNumber = this.shoppingCartService.countProducts();
+    this.subscription = this.store.select('shoppingCart').subscribe(
+      data => {
+        this.cartItemsNumber = 0;
+        for (const product of data.products) {
+          this.cartItemsNumber += product.amount;
         }
-      );
+      }
+    );
   }
 
   ngOnDestroy() {
